@@ -1,0 +1,43 @@
+regiones:
+  purace:
+    nombre: "Puracé - Volcán"
+    descripcion: "Sandbox operativo volcán Puracé (WGS84) según coordenadas.md"
+    epsg_destino: 4326
+    epsg_proyeccion_local: 3116
+    sandbox:
+      west: -76.60
+      south: 1.95
+      east: -76.22
+      north: 2.32
+    crater:
+      lat: 2.313889
+      lon: -76.397222
+    anillos:
+      - nombre: clip_sandbox_5km
+        radio_km: 5
+        uso: "Zona núcleo - operaciones inmediatas"
+      - nombre: clip_sandbox_15km
+        radio_km: 15
+        uso: "Zona operativa - rutas, refugios, accesos"
+      - nombre: clip_sandbox_30km
+        radio_km: 30
+        uso: "Zona extendida - impacto regional, planeación"
+    puntos_referencia:
+      - nombre: "Crater/centro volcánico Puracé"
+        lat: 2.313889
+        lon: -76.397222
+      - nombre: "Centro cadena volcánica (planificación)"
+        lat: 2.292222
+        lon: -76.378056
+      - nombre: "Ubicación plan nacional"
+        lat: 2.316944
+        lon: -76.398056
+
+rutas:
+  raiz: "."
+  geo_raw: "geo/raw"
+  geo_processed: "geo/processed"
+  geo_downloads: "geo/downloads"
+  geo_viento: "geo/viento"
+  geo_simulacion: "geo/simulacion"
+  qgis_proyectos: "qgis/proyectos"

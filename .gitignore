@@ -1,0 +1,26 @@
+# Credenciales (NO subir nunca)
+credenciales.md
+
+# Datos pesados / derivados descargados (se regeneran con el pipeline)
+geo/raw/
+geo/downloads/
+geo/processed/
+geo/simulacion/
+geo/viento/
+geo/_fs.json
+geo/_p3.json
+geo/pipeline.log
+
+# Proyecto QGIS (binario grande) — regenerable
+master_purace.qgz
+master_purace.qgz.bak
+symbology-style.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Sistema
+.DS_Store
+Thumbs.db
