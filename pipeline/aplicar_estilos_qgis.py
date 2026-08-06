@@ -146,6 +146,13 @@ cabeceras = load_layer('dane_cabeceras.geojson', 'DANE Cabeceras', 0)
 amenaza = load_layer('sgc_amenaza.geojson', 'SGC Amenaza volcánica', 6)
 piroclastos = load_layer('sgc_piroclastos.geojson', 'SGC Piroclastos', 1)
 volcan = load_layer('sgc_volcan_punto.geojson', 'SGC Volcán Puracé (cráter)', 0)
+# Hidrografía OSM (30km clip)
+waterways = load_layer('overpass_waterways__clip_sandbox_30km.geojson',
+                        'OSM Ríos y quebradas (30km)', 1)
+waterbodies = load_layer('overpass_waterbodies__clip_sandbox_30km.geojson',
+                         'OSM Cuerpos de agua (30km)', 6)
+springs = load_layer('overpass_springs__clip_sandbox_30km.geojson',
+                     'OSM Fuentes hídricas (30km)', 0)
 
 print('\n== Aplicando estilos ==')
 
@@ -202,6 +209,27 @@ if volcan:
         'color_border': '#ffffff', 'width_border': '1.5'})
     volcan.setRenderer(QgsSingleSymbolRenderer(sym_v))
     set_labels(volcan, 'VOLCAN', size=11, color_txt=QColor('#a00000'))
+
+# ---- Hidrografía OSM: ríos y quebradas (líneas azules) ----
+if waterways:
+    sym_w = QgsLineSymbol.createSimple({
+        'color': '#2196F3', 'width': '0.8', 'line_style': 'solid'})
+    sym_w.setOpacity(0.85)
+    waterways.setRenderer(QgsSingleSymbolRenderer(sym_w))
+
+# ---- Hidrografía OSM: cuerpos de agua (polígonos azul claro) ----
+if waterbodies:
+    sym_b = QgsFillSymbol.createSimple({
+        'color': '#90CAF9', 'color_border': '#1976D2', 'width_border': '0.4'})
+    sym_b.setOpacity(0.6)
+    waterbodies.setRenderer(QgsSingleSymbolRenderer(sym_b))
+
+# ---- Hidrografía OSM: fuentes hídricas (puntos azul oscuro) ----
+if springs:
+    sym_s = QgsMarkerSymbol.createSimple({
+        'name': 'circle', 'color': '#0D47A1', 'size': '4.0',
+        'color_border': '#ffffff', 'width_border': '1.0'})
+    springs.setRenderer(QgsSingleSymbolRenderer(sym_s))
 
 # ---- Anillos GPKG (re-estilizar si existe) ----
 anillos = existentes.get('referencia_anillos \u2014 anillos_km') or \
