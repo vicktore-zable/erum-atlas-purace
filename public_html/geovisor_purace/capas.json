@@ -1,0 +1,167 @@
+{
+  "grupos": [
+    "Vulcanología",
+    "Vías",
+    "Rural",
+    "Administrativo",
+    "Base Maps"
+  ],
+  "capas": [
+    {
+      "grupo": "Vulcanología",
+      "nombre": "SGC Amenaza",
+      "slug": "sgc_amenaza",
+      "archivo": "sgc_amenaza.geojson",
+      "checked": true,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "polygon",
+      "feats": 4,
+      "bytes": 70925
+    },
+    {
+      "grupo": "Vulcanología",
+      "nombre": "SGC Piroclastos",
+      "slug": "sgc_piroclastos",
+      "archivo": "sgc_piroclastos.geojson",
+      "checked": true,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "line",
+      "feats": 3,
+      "bytes": 9475
+    },
+    {
+      "grupo": "Vulcanología",
+      "nombre": "SGC Volcán Puracé",
+      "slug": "sgc_volcan_purace",
+      "archivo": "sgc_volcan_purace.geojson",
+      "checked": true,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "point",
+      "feats": 2,
+      "bytes": 499
+    },
+    {
+      "grupo": "Vías",
+      "nombre": "Vías DANE MGN",
+      "slug": "vias_dane_mgn",
+      "archivo": "vias_dane_mgn.geojson",
+      "checked": true,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "line",
+      "feats": 9446,
+      "bytes": 5311372
+    },
+    {
+      "grupo": "Vías",
+      "nombre": "Nomenclatura vial",
+      "slug": "nomenclatura_vial",
+      "archivo": "nomenclatura_vial.geojson",
+      "checked": false,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "line",
+      "feats": 16670,
+      "bytes": 4223201
+    },
+    {
+      "grupo": "Vías",
+      "nombre": "Caminos",
+      "slug": "caminos",
+      "archivo": "caminos.geojson",
+      "checked": false,
+      "minZoom": 14,
+      "maxZoom": 19,
+      "geometria": "line",
+      "feats": 128105,
+      "bytes": 27623179
+    },
+    {
+      "grupo": "Rural",
+      "nombre": "Cultura puntos rurales",
+      "slug": "cultura_puntos_rurales",
+      "archivo": "cultura_puntos_rurales.geojson",
+      "checked": false,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "point",
+      "feats": 31612,
+      "bytes": 4765843
+    },
+    {
+      "grupo": "Rural",
+      "nombre": "Curvas de nivel",
+      "slug": "curvas_de_nivel",
+      "archivo": "curvas_de_nivel.geojson",
+      "checked": false,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "line",
+      "feats": 17863,
+      "bytes": 9549438
+    },
+    {
+      "grupo": "Rural",
+      "nombre": "Hidrografía rural",
+      "slug": "hidrografia_rural",
+      "archivo": "hidrografia_rural.geojson",
+      "checked": false,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "line",
+      "feats": 102149,
+      "bytes": 27466095
+    },
+    {
+      "grupo": "Administrativo",
+      "nombre": "Zona urbana",
+      "slug": "zona_urbana",
+      "archivo": "zona_urbana.geojson",
+      "checked": true,
+      "minZoom": 12,
+      "maxZoom": 19,
+      "geometria": "polygon",
+      "feats": 874,
+      "bytes": 527592
+    },
+    {
+      "grupo": "Administrativo",
+      "nombre": "Departamentos",
+      "slug": "departamentos",
+      "archivo": "departamentos.geojson",
+      "checked": true,
+      "minZoom": 0,
+      "maxZoom": 19,
+      "geometria": "polygon",
+      "feats": 10,
+      "bytes": 1078160
+    },
+    {
+      "grupo": "Administrativo",
+      "nombre": "Municipios",
+      "slug": "municipios",
+      "archivo": "municipios.geojson",
+      "checked": true,
+      "minZoom": 11,
+      "maxZoom": 19,
+      "geometria": "polygon",
+      "feats": 113,
+      "bytes": 1603730
+    },
+    {
+      "grupo": "Administrativo",
+      "nombre": "Veredas",
+      "slug": "veredas",
+      "archivo": "veredas.geojson",
+      "checked": true,
+      "minZoom": 12,
+      "maxZoom": 19,
+      "geometria": "polygon",
+      "feats": 72,
+      "bytes": 11538
+    }
+  ]
+}

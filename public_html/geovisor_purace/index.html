@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERUM Atlas — Geovisor Puracé</title>
+<meta name="description" content="Geovisor interactivo del macizo volcánico Puracé: amenaza volcánica, vías, hidrografía, veredas y más.">
+
+<!-- Vendor -->
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="vendor/leaflet-measure.css">
+<link rel="stylesheet" href="vendor/leaflet-fullscreen.css">
+<link rel="stylesheet" href="vendor/fontawesome-all.min.css">
+<link rel="stylesheet" href="vendor/fonts/inter.css">
+
+<!-- Estilos propios -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="geovisor-header">
+  <div class="header-brand">
+    <div class="header-logo"><i class="fas fa-map-marked-alt"></i></div>
+    <div class="header-text">
+      <h1>ERUM Atlas — Puracé</h1>
+      <p>Geovisor del área volcánica Puracé</p>
+    </div>
+  </div>
+  <div class="header-tools">
+    <span class="badge-total"><i class="fas fa-layer-group"></i> <span id="total-capas">0</span> Capas</span>
+  </div>
+</header>
+
+<main class="geovisor-main">
+  <div id="map" class="geovisor-map"></div>
+
+  <!-- Indicador de carga -->
+  <div id="loading-indicator" class="loading-indicator">
+    <i class="fa fa-spinner fa-spin"></i><span id="loading-text">Cargando capas…</span>
+  </div>
+
+  <!-- Panel flotante Selector de Capas -->
+  <aside id="layers-panel" class="layers-panel">
+    <div class="panel-header">
+      <div class="panel-title">
+        <i class="fas fa-stack-overflow"></i>
+        <span>Selector de Capas</span>
+      </div>
+      <div class="panel-actions">
+        <span id="panel-count" class="badge-count">0 Capas</span>
+        <button id="panel-toggle" class="panel-toggle" aria-label="Colapsar panel">
+          <i class="fas fa-chevron-up"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="panel-body" id="panel-body">
+      <!-- Base maps -->
+      <section class="panel-section">
+        <h2><i class="fas fa-th-large"></i> Mapas Base</h2>
+        <div class="basemap-grid" id="basemap-grid"></div>
+      </section>
+
+      <!-- Grupos -->
+      <section class="panel-section">
+        <h2><i class="fas fa-layer-group"></i> Capas Espaciales</h2>
+        <div class="groups-container" id="groups-container"></div>
+      </section>
+    </div>
+  </aside>
+
+  <!-- Toolbar de medición Leaflet-MEASURE (regla) + fullscreen en controles del mapa -->
+</main>
+
+<footer class="geovisor-footer">
+  <span><i class="fas fa-copyright"></i> ERUM Atlas</span>
+  <span id="footer-zoom"></span>
+</footer>
+
+<!-- Vendor JS -->
+<script src="vendor/leaflet.js"></script>
+<script src="vendor/leaflet-fullscreen.js"></script>
+<script src="vendor/leaflet-measure.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

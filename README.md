@@ -14,41 +14,51 @@ simulación de dispersión de ceniza volcánica.
   regional).
 - **CRS:** datos en EPSG:4326; proyección local de análisis EPSG:3116
   (Colombia Oeste / Bogotá).
+- **Municipios afectados:** 11 municipios en radio de 100km (Cauca y Huila).
 
 Configuración en `config/regiones.yaml`.
 
 ## Estructura
 
 ```text
-config/regiones.yaml      # región, sandbox, cráter, anillos, rutas
-pipeline/                 # scripts de descarga, normalización, simulación
+config/regiones.yaml              # región, sandbox, cráter, anillos, rutas
+pipeline/                         # scripts de descarga, normalización, simulación
 geo/
-  raw/                    # datos originales (DANE, SGC, DEM, curvas)
-  processed/              # capas normalizadas/recortadas
-  downloads/              # exportaciones GPX/KML para Garmin
-  viento/                 # perfiles de viento Open-Meteo (CSV/JSON)
-  simulacion/             # salidas de la pluma (TIF + GeoJSON por hora)
-qgis/                     # documentación del proyecto QGIS
-master_purace.qgz         # proyecto QGIS con capas + estilos + animación
+  raw/                            # datos originales (DANE, SGC, DEM, curvas)
+  processed/                      # capas normalizadas/recortadas
+    vig2025/                      # VIG2025 recortado a 11 municipios (23 GeoJSON)
+    mgn2025/                      # MGN 2025 recortado (9 GeoJSON)
+    municipios_afectados.geojson  # Polígono de los 11 municipios
+  wind/                           # Vectores de viento (24 GeoJSON)
+  ash_contours/                   # Contornos ceniza (144 GeoJSON)
+  simulacion/                     # salidas de la pluma (TIF + GeoJSON por hora)
+  downloads/                      # exportaciones GPX/KML para Garmin
+qgis/                             # documentación del proyecto QGIS
+docs/                             # documentación adicional
+public_html/                      # visor web Leaflet + Cesium
+master_purace.qgz                 # proyecto QGIS con capas + estilos + animación
 ```
 
 ## Pipeline de datos
 
 | Paso | Script | Salida |
-|---|---|---|
-| Descargar DANE (departamentos, municipios, cabeceras, veredas) | `descargar_dane.py` | `geo/raw/*.geojson` |
-| Descargar amenaza SGC (vector oficial) | `descargar_sgc.py` | `geo/raw/sgc_*.geojson` |
-| Descargar relieve Copernicus DEM 30m + curvas | `descargar_relieve.py` | `geo/raw/dem/`, `curvas_50m.shp`, `curvas_maestras_250m.shp` |
-| Normalizar (uppercase, atributos, CRS) | `normalizar.py` | `geo/processed/` |
-| Recortar por anillos 5/15/30 km | `recortar_anillos.py` | `geo/processed/*_anillo*.geojson` |
-| Exportar GeoJSON + índice | `exportar_geojson.py` | `geo/downloads/` |
-| Exportar GPX/KML (Garmin) | `exportar_garmin.py` | `geo/downloads/*.gpx/kml` |
-| Orquestar todo | `run_pipeline.py --solo ...` | — |
+|------|--------|--------|
+| Descargar DANE | `descargar_dane.py` | `geo/raw/*.geojson` |
+| Descargar SGC | `descargar_sgc.py` | `geo/raw/sgc_*.geojson` |
+| Descargar relieve | `descargar_relieve.py` | `geo/raw/dem/`, curvas |
+| Normalizar | `normalizar.py` | `geo/processed/` |
+| Recortar por anillos | `recortar_anillos.py` | `geo/processed/*_anillo*.geojson` |
+| Recortar VIG2025 | `recortar_vig2025_geopandas.py` | `geo/processed/vig2025/` |
+| Exportar GeoJSON | `exportar_geojson.py` | `geo/downloads/` |
+| Exportar GPX/KML | `exportar_garmin.py` | `geo/downloads/*.gpx/kml` |
+| Simular pluma | `simular_pluma.py` | `geo/simulacion/` |
+| Generar viento | `generate_wind_vectors.py` | `geo/wind/` |
+| Vectorializar ceniza | `vectorize_ash.py` | `geo/ash_contours/` |
 
 ## Simulación de dispersión de ceniza
 
 ```
-descargar_viento.py ──► viento_prevision_72h.csv/.json  (perfil horario 10 niveles)
+descargar_viento.py ──► viento_prevision_72h.csv/.json
        ▼
 simular_pluma.py ──► geo/simulacion/prevision/H_{5,8,12}km/
        │                ├─ *_concentracion.tif   (mg/m³)
@@ -61,63 +71,120 @@ aplicar_simulacion_qgis.py ──► master_purace.qgz (capas temporales animabl
 ### Escenarios eruptivos
 
 | Escenario | Altura columna | Tasa de emisión |
-|---|---|---|
+|-----------|----------------|-----------------|
 | `5km` | 5 000 m | 2×10⁴ kg/s (moderada) |
 | `8km` | 8 000 m | 1×10⁵ kg/s (fuerte) |
 | `12km` | 12 000 m | 5×10⁵ kg/s (vulcánica) |
-
-El viento se toma del nivel de presión más cercano a la altura de la columna
-(`ALT_PRESION` en `simular_pluma.py`).
-
-### Modelo
-
-Pluma gaussiana con **coeficientes Briggs rurales** (Pasquill-Gifford 1-6) y
-**sedimentación gravitatoria multi-clase** de 5 diámetros de partícula
-(20–500 µm, fracciones 0.25/0.35/0.20/0.15/0.05). La pluma viaja hacia
-`dir_viento + 180°`. Fuente de viento: Open-Meteo API (gratis, sin clave).
 
 ### Ejecución
 
 ```bash
 python pipeline/simular_pluma.py --region purace --modo prev --hasta 24 --radio 60000
 python pipeline/simular_pluma.py --region purace --modo prev --hasta 72 --radio 60000
-python pipeline/simular_pluma.py --region purace --modo clima --temporada dic_feb --radio 60000
 ```
-
-`--radio` define la semiextensión del dominio en metros centrado en el cráter
-(120 km de lado cubre plumas en cualquier dirección). Sin `--radio`, se usa el
-sandbox.
-
-### Animación en QGIS
-
-`pipeline/aplicar_simulacion_qgis.py` carga el grupo **Simulacion ceniza
-(prevision)** (216 capas temporales para 24 h × 3 escenarios × 3 productos).
-Animar con **Vista ▸ Panel ▸ Control temporal ▸ play**.
-
-Detalles en `qgis/03_simulacion_viento.md`.
 
 ## Proyecto QGIS
 
-`master_purace.qgz` (backup en `master_purace.qgz.bak`) incluye 11 capas de
-contexto estilizadas (DANE, SGC amenaza categorizada, anillos graduados,
-piroclastos, cráter) más el grupo de simulación. Se configura con:
+`master_purace.qgz` incluye:
 
-- `pipeline/aplicar_estilos_qgis.py` — capas base y estilos.
-- `pipeline/aplicar_simulacion_qgis.py` — capas temporales de ceniza.
+### Capas (26)
 
-Documentación en `qgis/01_adquisicion.md`, `qgis/02_estilos.md`,
-`qgis/03_simulacion_viento.md`.
+| Grupo | Capas |
+|-------|-------|
+| Base Maps | OpenStreetMap, Esri Satellite, Colombia |
+| Administrativo | Departamentos, Municipios, Veredas, Cabeceras |
+| Vulcanología | SGC Amenaza, SGC Piroclastos, SGC Volcán Puracé |
+| Vías | Vías DANE MGN (9,446 features) |
+| Urbano | Líneas urbanas, Toponimia, Nomenclatura, Manzanas |
+| Rural | Cultura, Hidrografía, Curvas de nivel |
+| Sectorización DANE | Secciones, Sectores, Zonas, Clase terreno |
+
+### Estilos
+
+- **SGC Amenaza:** categorizado Alta→rojo, Media→naranja, Baja→amarillo
+- **Vías:** categorizado por tipo (motorway, trunk, primary, secondary, tertiary)
+- **Hidrografía:** línea azul
+- **Curvas de nivel:** línea gris
+- **Veredas:** borde gris claro punteado
+
+### Documentación
+
+- `docs/qgis_master_purace.md` — Documentación completa
+- `qgis/01_adquisicion.md` — Guía de adquisición de datos
+- `qgis/02_estilos.md` — Documentación de estilos
+- `qgis/03_simulacion_viento.md` — Documentación de simulación
+
+## Visor Web
+
+### Leaflet 2D + Cesium 3D
+
+```bash
+# Iniciar servidor
+cd public_html && python -m http.server 8080
+
+# Abrir en navegador
+http://localhost:8080
+```
+
+### Funcionalidades
+
+- Visor dual: Leaflet 2D / Cesium 3D / Split
+- Panel de capas con checkboxes
+- Popups informativos
+- Terrain 3D (Cesium)
+- Sincronización entre visores
+
+## Datos en G:\SIG
+
+### DANE MGN 2025
+
+**Ruta:** `G:\SIG\01_FUENTES_OFICIALES\DANE\MGN2025_00_COLOMBIA\MGN_2025_COLOMBIA\`
+
+| Directorio | Contenido |
+|------------|-----------|
+| ADMINISTRATIVO | Departamentos, Municipios |
+| COLOMBIA | Límite nacional |
+| MGN | Secciones, Sectores, Zonas urbanas |
+| RURAL | Cultura, Hidrografía, Hipso (curvas) |
+| URBANO | Líneas, Toponimia, Nomenclatura, Manzanas |
+| VIAS | Red vial nacional (323,797 features) |
+| SIMBOLOS | 252 símbolos SVG |
+
+### IGAC
+
+**Ruta:** `G:\SIG\01_FUENTES_OFICIALES\IGAC\VECTOR\`
+
+| Capa | Archivo |
+|------|---------|
+| Vías 1:100K | `vias 1-100000.shp` |
+| Vías Colombia 1:500K | `vias colombia 1-500000.shp` |
+| Ríos | `rios_simples.shp` |
+| Orografía | `orografia.shp` |
+| Cabeceras | `cabeceras_municipales-igac.shp` |
+| Sitios de interés | `sitios de interes.shp` |
+
+## Municipios Afectados (11)
+
+| # | Municipio | Departamento | DIVIPOLA | Distancia |
+|---|-----------|--------------|----------|-----------|
+| 1 | Puracé | Cauca | 19585 | 6.4 km |
+| 2 | Popayán | Cauca | 19001 | 25.9 km |
+| 3 | Sotará - Páispamba | Cauca | 19760 | 26.5 km |
+| 4 | Isnos | Huila | 41359 | 34.2 km |
+| 5 | Saladoblanco | Huila | 41660 | 37.0 km |
+| 6 | San Agustín | Huila | 41668 | 38.4 km |
+| 7 | La Argentina | Huila | 41378 | 38.5 km |
+| 8 | Inzá | Cauca | 19355 | 41.9 km |
+| 9 | La Vega | Cauca | 19397 | 48.5 km |
+| 10 | Pitalito | Huila | 41551 | 60.0 km |
+| 11 | San Sebastián | Cauca | 19693 | 65.7 km |
 
 ## Entorno
 
 - Python del QGIS 3.44.7: `D:\Program Files\QGIS 3.44.7\apps\Python312\python.exe`
-  (PyQGIS + GDAL disponibles).
-- PyQGIS headless: `QgsApplication(argv, False)` +
-  `setPrefixPath('D:/Program Files/QGIS 3.44.7/apps/qgis', True)`.
-- Curvas de nivel: CLI `gdal_contour.exe -i 50 -a ELEV` (la API
-  `ContourGenerate` no está disponible).
-- Fuentes externas: DANE Geoportal, SGC mapa de amenaza (vector oficial),
-  Copernicus DEM 30m (AWS), Open-Meteo.
+- PyQGIS headless: `QgsApplication(argv, False)` + `setPrefixPath('D:/Program Files/QGIS 3.44.7/apps/qgis', True)`
+- Curvas de nivel: CLI `gdal_contour.exe -i 50 -a ELEV`
+- Fuentes externas: DANE Geoportal, SGC ArcGIS, Copernicus DEM, Open-Meteo
 
 ## Seguridad
 

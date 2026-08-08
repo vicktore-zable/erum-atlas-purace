@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERUM Atlas — Puracé</title>
+<meta name="description" content="Geovisor del área volcánica Puracé: 13 capas geoespaciales, pipeline DANE/SGC, simulación de dispersión de ceniza. Fundación ERUM.">
+
+<!-- Vendor -->
+<link rel="stylesheet" href="geovisor_purace/vendor/fontawesome-all.min.css">
+<link rel="stylesheet" href="geovisor_purace/vendor/fonts/inter.css">
+
+<!-- Landing styles -->
+<link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+
+<!-- Decorative glows -->
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- Nav -->
+<nav class="landing-nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand" aria-label="ERUM Atlas — Inicio">
+      <div class="nav-logo"><img src="img/logo-erum.avif" alt="Logo ERUM" style="height:36px;width:auto;"></div>
+      <div class="nav-text">
+        <h1>ERUM Atlas</h1>
+        <span>Puracé · Cauca · Colombia</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#beneficios">Beneficios</a>
+      <a href="#capas">Capas</a>
+      <a href="#tecnologia">Tecnología</a>
+      <a href="#documentacion">Documentación</a>
+      <a href="#autor">Autor</a>
+    </div>
+    <a href="geovisor_purace/" class="btn btn-primary nav-cta">Abrir Geovisor&nbsp;<i class="fas fa-arrow-right"></i></a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-grid">
+    <div class="hero-text">
+      <div class="hero-badge"><i class="fas fa-bolt"></i> Volcán Puracé · Nivel Naranja</div>
+      <h1>ERUM Atlas —<br><span>Geovisor Puracé</span></h1>
+      <p>Plataforma geoespacial para gestión operativa del riesgo volcánico. Visualiza amenazas, vías, hidrografía, veredas, curvas de nivel y más en un mapa interactivo con datos oficiales del DANE, SGC y OSM.</p>
+      <div class="hero-actions">
+        <a href="geovisor_purace/" class="btn btn-primary"><i class="fas fa-map"></i> Abrir Geovisor</a>
+        <a href="https://github.com/vicktore-zable/erum-atlas-purace" target="_blank" rel="noopener" class="btn btn-glass"><i class="fab fa-github"></i> Ver en GitHub</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-chip"><i class="fas fa-layer-group" style="color:var(--accent);margin-right:4px"></i><strong>13</strong> Capas</div>
+        <div class="stat-chip"><i class="fas fa-object-group" style="color:var(--accent);margin-right:4px"></i><strong>4</strong> Grupos</div>
+        <div class="stat-chip"><i class="fas fa-draw-polygon" style="color:var(--accent);margin-right:4px"></i><strong>~307K</strong> Features</div>
+        <div class="stat-chip"><i class="fas fa-globe" style="color:var(--accent);margin-right:4px"></i><strong>3</strong> Mapas base</div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="img/anillos_riesgo.png" alt="Anillos de riesgo volcánico Puracé — ERUM Atlas" loading="eager">
+    </div>
+  </div>
+</header>
+
+<!-- Beneficios -->
+<section class="section" id="beneficios">
+  <div class="container">
+    <div class="section-label"><i class="fas fa-star"></i> ¿Por qué ERUM Atlas?</div>
+    <h2 class="section-title">Beneficios operativos</h2>
+    <p class="section-subtitle">Herramientas construidas para equipos de respuesta que necesitan información territorial clara, rápida y siempre disponible.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-crosshairs"></i></div>
+        <h3>Cuadro operacional común</h3>
+        <p>Un solo mapa con todas las capas relevantes para que cada actor vea lo mismo y actúe coordinado.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-route"></i></div>
+        <h3>Planeación de rutas y acceso</h3>
+        <p>Vías DANE MGN categorizadas, caminos veredales e hidrografía para planear evacuaciones y logística.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-database"></i></div>
+        <h3>Datos oficiales integrados</h3>
+        <p>Capas del DANE MGN 2025, SGC (amenaza volcánica) y fuentes abiertas, listas para consultar.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-wifi-slash"></i></div>
+        <h3>Operación sin internet</h3>
+        <p>Datos GeoJSON servidos desde el mismo dominio. El navegador cachea las capas y permite consulta en campo.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Conciencia situacional</h3>
+        <p>Identifica zonas de amenaza alta/media/baja, territorios expuestos e infraestructura crítica en segundos.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+        <h3>Escala de lo local a lo nacional</h3>
+        <p>Desde una vereda hasta 11 municipios y 2 departamentos. El mismo visor escala sin cambiar de herramienta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Capas -->
+<section class="section" id="capas">
+  <div class="container">
+    <div class="section-label"><i class="fas fa-layer-group"></i> Datos espaciales</div>
+    <h2 class="section-title">Capas del geovisor</h2>
+    <p class="section-subtitle">13 capas en 4 grupos temáticos, estilizadas con fidelidad al proyecto QGIS master.</p>
+    <div class="capas-grid">
+      <!-- Vulcanología -->
+      <div class="capa-group">
+        <div class="capa-group-header">
+          <i class="fas fa-mountain"></i>
+          <h3>Vulcanología</h3>
+          <span class="count">9 features</span>
+        </div>
+        <div class="capa-items">
+          <span class="capa-chip"><span class="capa-swatch" style="background:#d7191c"></span>SGC Amenaza <span class="feats">4</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#e84a25"></span>SGC Piroclastos <span class="feats">3</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#e60000"></span>SGC Volcán Puracé <span class="feats">2</span></span>
+        </div>
+      </div>
+      <!-- Vías -->
+      <div class="capa-group">
+        <div class="capa-group-header">
+          <i class="fas fa-road"></i>
+          <h3>Vías</h3>
+          <span class="count">154,221 features</span>
+        </div>
+        <div class="capa-items">
+          <span class="capa-chip"><span class="capa-swatch" style="background:#e63946"></span>Vías DANE MGN <span class="feats">9,446</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#e15989"></span>Nomenclatura vial <span class="feats">16,670</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#d97706"></span>Caminos <span class="feats">128,105</span></span>
+        </div>
+      </div>
+      <!-- Rural -->
+      <div class="capa-group">
+        <div class="capa-group-header">
+          <i class="fas fa-tree"></i>
+          <h3>Rural</h3>
+          <span class="count">151,624 features</span>
+        </div>
+        <div class="capa-items">
+          <span class="capa-chip"><span class="capa-swatch" style="background:#e5b636"></span>Cultura puntos rurales <span class="feats">31,612</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#9b9fa6"></span>Curvas de nivel <span class="feats">17,863</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#2196f3"></span>Hidrografía rural <span class="feats">102,149</span></span>
+        </div>
+      </div>
+      <!-- Administrativo -->
+      <div class="capa-group">
+        <div class="capa-group-header">
+          <i class="fas fa-landmark"></i>
+          <h3>Administrativo</h3>
+          <span class="count">1,069 features</span>
+        </div>
+        <div class="capa-items">
+          <span class="capa-chip"><span class="capa-swatch" style="background:#ffa6b8"></span>Zona urbana <span class="feats">874</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#4f4f7a"></span>Departamentos <span class="feats">10</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#7f7f7f"></span>Municipios <span class="feats">113</span></span>
+          <span class="capa-chip"><span class="capa-swatch" style="background:#94a3b8"></span>Veredas <span class="feats">72</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tecnología -->
+<section class="section" id="tecnologia">
+  <div class="container">
+    <div class="section-label"><i class="fas fa-microchip"></i> Stack tecnológico</div>
+    <h2 class="section-title">Tecnología</h2>
+    <p class="section-subtitle">Un pipeline robusto que transforma datos oficiales en un visor web liviano, sin dependencias externas en producción.</p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <i class="fas fa-leaf"></i>
+        <div class="tech-info"><h4>Leaflet 1.9.4</h4><span>Canvas 2D, popups, tooltips, fullscreen, medición</span></div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-map"></i>
+        <div class="tech-info"><h4>QGIS 3.44.7</h4><span>Proyecto maestro con 26 capas y estilos fieles</span></div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-globe-americas"></i>
+        <div class="tech-info"><h4>GeoJSON · DANE · SGC · OSM</h4><span>Datos de fuentes oficiales y colaborativas</span></div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-code"></i>
+        <div class="tech-info"><h4>JavaScript · CSS · HTML</h4><span>Sin frameworks. Rápido, liviano, fácil de mantener.</span></div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-server"></i>
+        <div class="tech-info"><h4>Hosting compartido (Apache)</h4><span>PHP no requerido en producción. Sirve archivos estáticos.</span></div>
+      </div>
+      <div class="tech-card">
+        <i class="fas fa-cogs"></i>
+        <div class="tech-info"><h4>Pipeline PyQGIS</h4><span>Exportador automático de estilos QGIS → JavaScript</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Documentación -->
+<section class="section" id="documentacion">
+  <div class="container">
+    <div class="section-label"><i class="fas fa-book"></i> Aprende más</div>
+    <h2 class="section-title">Documentación</h2>
+    <p class="section-subtitle">Guías completas del proyecto QGIS, pipeline de datos y estructura del repositorio.</p>
+    <div class="docs-grid">
+      <a href="https://github.com/vicktore-zable/erum-atlas-purace/blob/main/docs/qgis_master_purace.md" target="_blank" rel="noopener" class="doc-card">
+        <i class="fas fa-file-alt"></i>
+        <h4>Proyecto QGIS</h4>
+        <p>Documentación completa del proyecto maestro: 26 capas, estilos, CRS, fuentes.</p>
+      </a>
+      <a href="https://github.com/vicktore-zable/erum-atlas-purace/blob/main/README.md" target="_blank" rel="noopener" class="doc-card">
+        <i class="fas fa-code-branch"></i>
+        <h4>README del repositorio</h4>
+        <p>Pipeline de datos, simulación de ceniza, estructura del proyecto y comandos.</p>
+      </a>
+      <a href="https://github.com/vicktore-zable/erum-atlas-purace" target="_blank" rel="noopener" class="doc-card">
+        <i class="fab fa-github"></i>
+        <h4>Repositorio en GitHub</h4>
+        <p>Código fuente completo, issues, contribuciones y despliegue.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Autor -->
+<section class="author-section" id="autor">
+  <div class="container">
+    <div class="section-label" style="text-align:center;justify-content:center"><i class="fas fa-user-check"></i> Quién lo construye</div>
+    <div class="author-card">
+      <div class="author-avatar"><i class="fas fa-mountain"></i></div>
+      <div class="author-info">
+        <h3>Víctor Fabio Castro</h3>
+        <div class="role">Ingeniero de Sistemas · SAR · Experto en SIG y Geointeligencia</div>
+        <p>Miembro fundador de la <strong>Fundación ERUM</strong> (Emergency Response Unit for Management), organización dedicada a la gestión del riesgo, la respuesta a emergencias y la resiliencia territorial. SAR — <em>Search and Rescue, for other lives</em>. Combina ingeniería de sistemas con experiencia operativa en campo para construir herramientas que salvan vidas.</p>
+        <div class="author-links">
+          <a href="https://www.linkedin.com/in/victorfabiocastro/" target="_blank" rel="noopener" class="author-link"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="https://fundacionerum.org.co/" target="_blank" rel="noopener" class="author-link"><i class="fas fa-heart"></i> Fundación ERUM</a>
+          <a href="https://mrmtech.net/" target="_blank" rel="noopener" class="author-link"><i class="fas fa-globe"></i> mrmtech.net</a>
+          <a href="https://github.com/vicktore-zable" target="_blank" rel="noopener" class="author-link"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="landing-footer">
+  <div class="container">
+    <p>&copy; 2026 ERUM Atlas · Fundación ERUM</p>
+    <div class="footer-links">
+      <a href="https://mrmtech.net/" target="_blank" rel="noopener">mrmtech.net</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#capas">Capas</a>
+      <a href="https://github.com/vicktore-zable/erum-atlas-purace" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div style="margin-top:16px;text-align:center">
+      <a href="https://mrmtech.net/" target="_blank" rel="noopener"><img src="img/logo-mrmtech.jpg" alt="MRMTech" style="height:40px;width:auto;opacity:0.8;"></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
