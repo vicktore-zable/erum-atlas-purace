@@ -1,5 +1,8 @@
-# Credenciales (NO subir nunca)
+# Credenciales y deploy (NO subir nunca)
 credenciales.md
+DEPLOY.md
+deploy_purace.sh
+*.ssh_pass.sh
 
 # Datos pesados / derivados descargados (se regeneran con el pipeline)
 geo/raw/
